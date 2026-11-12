@@ -3,6 +3,7 @@ import dotenv  from "dotenv";
 import connectDB from "./config/db.js";
 import authRoutes from "./Routes/authRoutes.js"
 import productRoutes from "./Routes/productRoutes.js"
+import cartRoutes from "./Routes/cartRoutes.js"
 import cookieParser from "cookie-parser";
 
 
@@ -21,6 +22,7 @@ connectDB()
 
 app.use(authRoutes)
 app.use(productRoutes)
+app.use(cartRoutes)
 
 
 

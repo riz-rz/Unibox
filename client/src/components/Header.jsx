@@ -15,7 +15,7 @@ const Header = () => {
         <nav>
             <ul className='flex gap-10 cursor-pointer'>
                 <li><Link>Home</Link> </li>
-                <li><Link to="/products" path>Products</Link> </li>
+                <li><Link to="/products" >Products</Link> </li>
                 <li><Link>About Us</Link> </li>
                 <li><Link>Contacts</Link> </li>
             </ul>

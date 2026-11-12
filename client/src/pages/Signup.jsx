@@ -30,7 +30,7 @@ const Signup = () => {
                 <div className='w-full grid grid-cols-2 gap-4'>
                     <div>
                         <label htmlFor="" className='text-sm'>FULL NAME <span className='text-red-600'>*</span></label>
-                        <input type="text" placeholder='enter your name' className='border-2 px-4 py-3 rounded-xl shadow-[3px_3px_0px_#000] outline-none'/>
+                        <input type="text" placeholder='enter your name' className='border-2  px-4 py-3 rounded-xl shadow-[3px_3px_0px_#000] outline-none'/>
                     </div>
                     <div>
                         <label htmlFor="" className='text-sm'>EMAIL ADDRESS <span className='text-red-600'>*</span></label>
