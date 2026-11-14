@@ -5,6 +5,8 @@ import authRoutes from "./Routes/authRoutes.js"
 import productRoutes from "./Routes/productRoutes.js"
 import cartRoutes from "./Routes/cartRoutes.js"
 import cookieParser from "cookie-parser";
+import cors from "cors"
+
 
 
 const app = express()
@@ -12,6 +14,9 @@ const app = express()
 
 // to convert json data to the og form
 app.use(express.json())
+
+// to connect react to server
+app.use(cors({origin:"http://localhost:5173", credentials:true} ))
 
 // to read the data in cookies
 app.use(cookieParser())
