@@ -1,4 +1,5 @@
 import jwt, { decode } from 'jsonwebtoken'
+import User from '../models/users.js';
 
 
 const authenticate =(req,res,next)=>{
@@ -14,7 +15,9 @@ const authenticate =(req,res,next)=>{
 
     const decoded = jwt.verify(token,process.env.JWT_SECRET)
 
-    console.log(decoded);
+    console.log("decoded: ",decoded);
+
+    // const user = await User.find()
 
     if(!decoded){
         return res.status(401).json({success:false, message:"Invalid token"})

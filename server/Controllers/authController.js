@@ -43,3 +43,11 @@ export const login = async(req,res)=>{
         res.status(500).json({success:false, message:error.message})
     }
 }
+
+export const getUser = async(req,res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
