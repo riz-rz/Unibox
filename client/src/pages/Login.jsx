@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
@@ -39,6 +40,8 @@ const Login = () => {
                 email:"",
                 password:""
             })
+
+            toast.success("Login successfull!!")
 
         } catch (error) {
             console.log("Error while logging in:", error);

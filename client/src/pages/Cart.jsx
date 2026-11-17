@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Cart = () => {
 
@@ -19,10 +20,25 @@ const Cart = () => {
 
   const RemoveFromCart =async(prodId)=>{
     try {
-      const res = await fetch(`http://localhost:500/cart/${prodId}`, {method:"DELETE", credentials:"include"})
+      const res = await fetch(`http://localhost:5000/cart/${prodId}`, {method:"DELETE", credentials:"include"})
       const data = await res.json()
       console.log(data);
       fetchCart()
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+  const handleQtyUpdation = async(prodId, action) => {
+    try {
+      const res = await fetch(`http://localhost:5000/cart/${prodId}/${action}`, {method:"PUT", credentials:"include"})
+      const data = await res.json();
+      console.log(data);
+      fetchCart()
+
+      
+      
     } catch (error) {
       console.log(error);
       
@@ -76,9 +92,9 @@ const Cart = () => {
 
                       <div className='flex justify-between items-center mt-5'>
                         <div className='flex items-center border-2 border-black rounded-lg'>
-                          <button className='px-3 py-1 font-bold'>-</button>
-                          <span className='px-4 py-1 border-x-2 border-black font-bold'>1</span>
-                          <button className='px-3 py-1 font-bold'>+</button>
+                          <button onClick={()=> handleQtyUpdation(item.product._id, "decrement")} className='px-3 py-1 font-bold'>-</button>
+                          <span className='px-4 py-1 border-x-2 border-black font-bold'>{item.quantity}</span>
+                          <button onClick={()=> handleQtyUpdation(item.product._id, "increment")} className='px-3 py-1 font-bold'>+</button>
                         </div>
                       </div>
                     </div>
