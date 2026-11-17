@@ -30,15 +30,6 @@ app.use(productRoutes)
 app.use(cartRoutes)
 
 
-
-
-
-
-
-
-
-
-
 app.listen(5000,()=>{
     console.log("server is up and running on 5000....");
     

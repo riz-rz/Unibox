@@ -2,7 +2,7 @@ import jwt, { decode } from 'jsonwebtoken'
 import User from '../models/users.js';
 
 
-const authenticate =(req,res,next)=>{
+const authenticate =async(req,res,next)=>{
 
     const token = req.cookies.token
 
@@ -17,7 +17,9 @@ const authenticate =(req,res,next)=>{
 
     console.log("decoded: ",decoded);
 
-    // const user = await User.find()
+    const user = await User.findById(decoded.id)
+
+    req.user = user;
 
     if(!decoded){
         return res.status(401).json({success:false, message:"Invalid token"})
