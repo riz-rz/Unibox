@@ -52,7 +52,7 @@ const Cart = () => {
 
 
   return (
-    <div className='min-h-screen bg-[#faf9f6] px-5 md:px-20 py-10'>
+    <div className='min-h-screen bg-[rgb(255,248,220)] px-5 md:px-20 py-10'>
 
       {/* Header */}
       <div className='flex justify-between items-end border-b-2 border-black pb-5 mb-10'>

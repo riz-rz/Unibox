@@ -11,7 +11,11 @@ const Profile = () => {
              <BsPerson size={28}/>
         </summary>  
         <div className="absolute right-0 top-14 w-32 bg-white border-2  border-black rounded-xl shadow-[3px_3px_0px_#000] z-50">
-            <Link to="/signup" className="block p-3 hover:bg-yellow-300 hover:rounded-t-xl">
+            <Link to="/user" className="block p-3 hover:bg-yellow-300 hover:rounded-t-xl">
+              Profile
+            </Link>
+
+            <Link to="/signup" className="block p-3 hover:bg-yellow-300 ">
               Sign Up
             </Link>
 
