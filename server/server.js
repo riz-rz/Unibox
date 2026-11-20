@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./Routes/authRoutes.js"
 import productRoutes from "./Routes/productRoutes.js"
 import cartRoutes from "./Routes/cartRoutes.js"
+import userRoutes from "./Routes/userRoutes.js"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 
@@ -16,8 +17,13 @@ const app = express()
 app.use(express.json())
 
 // to connect react to server
-app.use(cors({ origin: "https://unibox-navy.vercel.app", credentials: true }));
-
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://unibox-navy.vercel.app"
+    ],
+    credentials: true
+}));
 
 // to read the data in cookies
 app.use(cookieParser())
@@ -29,7 +35,7 @@ connectDB()
 app.use(authRoutes)
 app.use(productRoutes)
 app.use(cartRoutes)
-
+app.use(userRoutes)
 
 app.listen(5000,()=>{
     console.log("server is up and running on 5000....");

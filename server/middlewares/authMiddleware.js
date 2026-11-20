@@ -35,7 +35,7 @@ export const authorize =(...roles)=>{
             return res.status(401).json({ message: "login required", success: false })
         }
 
-        if(!roles.includes(req.user.roles)){
+        if(!roles.includes(req.user.role)){
             return res.status(401).json({ message: "unauthorized attempt", success: false })
         }
 
