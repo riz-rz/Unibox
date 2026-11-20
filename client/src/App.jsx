@@ -1,15 +1,17 @@
 import React from 'react'
 import Header from './components/Header'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Products from './pages/Products'
 import Cart from './pages/Cart'
 import Home from './pages/Home'
 import ProdDetails from './pages/ProdDetails'
-import HomeLayout from '../layouts/HomeLayout'
+import HomeLayout from './layouts/HomeLayout'
 import {Toaster} from "react-hot-toast"
 import UserProfile from './pages/UserProfile'
+import AdminLayout from './layouts/AdminLayout'
+import Dashboard from './pages/Dashboard'
 
 
 const App = () => {
@@ -19,12 +21,18 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>} />
-        <Route path='/' element={<HomeLayout/>}>
+
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
+        <Route path='/shop' element={<HomeLayout/>}>
           <Route index element={<Home/>}/> 
-          <Route path="/user" element={<UserProfile/>} />
-          <Route path="/products" element={<Products/>} />
-          <Route path="/products/:id" element={<ProdDetails/>} />
-          <Route path="/cart" element={<Cart/>} />
+          <Route path="user" element={<UserProfile/>} />
+          <Route path="products" element={<Products/>} />
+          <Route path="products/:id" element={<ProdDetails/>} />
+          <Route path="cart" element={<Cart/>} />
+        </Route>
+        <Route path='/admin' element={<AdminLayout/>}>
+          <Route path='dashboard' element={<Dashboard/>}/>
         </Route>
         
       </Routes>

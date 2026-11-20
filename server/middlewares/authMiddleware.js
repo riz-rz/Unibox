@@ -29,4 +29,18 @@ const authenticate =async(req,res,next)=>{
     
 }
 
+export const authorize =(...roles)=>{
+    return async(req, res, next)=>{
+        if(!req.user){
+            return res.status(401).json({ message: "login required", success: false })
+        }
+
+        if(!roles.includes(req.user.roles)){
+            return res.status(401).json({ message: "unauthorized attempt", success: false })
+        }
+
+        next()
+    }
+}
+
 export default authenticate

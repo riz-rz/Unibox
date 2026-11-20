@@ -16,7 +16,8 @@ const app = express()
 app.use(express.json())
 
 // to connect react to server
-app.use(cors({origin:"http://localhost:5174", credentials:true} ))
+app.use(cors({ origin: "https://unibox-navy.vercel.app", credentials: true }));
+
 
 // to read the data in cookies
 app.use(cookieParser())

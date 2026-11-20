@@ -1,8 +1,11 @@
 
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         email: '',
@@ -30,6 +33,10 @@ const Login = () => {
 
             console.log(data);
 
+            if(data.success){
+                navigate("/shop")
+            }
+
 
             if (!res.ok) {
                 alert(data.message || "Login failed");
@@ -42,6 +49,8 @@ const Login = () => {
             })
 
             toast.success("Login successfull!!")
+
+
 
         } catch (error) {
             console.log("Error while logging in:", error);
