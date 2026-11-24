@@ -2,9 +2,16 @@ import User from "../models/users.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// Same options for setting AND clearing the cookie, otherwise the browser keeps it
+const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+};
+
 export const register = async (req, res) => {
     try {
-        const { name, email, password, phone } = req.body;
+        const { name, email, password, phone, avatar } = req.body;
 
         if (!name || !email || !password) {
             return res.status(400).json({ message: "Name, email and password are required", success: false });
@@ -15,7 +22,7 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: "An account with this email already exists", success: false });
         }
 
-        const newUser = await User.create({ name, email, password, phone });
+        const newUser = await User.create({ name, email, password, phone, avatar });
         const userObj = newUser.toObject();
         delete userObj.password;
 
@@ -44,6 +51,10 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Incorrect password!", success: false });
         }
 
+        if (isExist.isBlocked) {
+            return res.status(403).json({ message: "Your account has been blocked. Contact support.", success: false });
+        }
+
         const token = jwt.sign(
             { id: isExist._id, email: isExist.email, role: isExist.role },
             process.env.JWT_SECRET,
@@ -51,9 +62,7 @@ export const login = async (req, res) => {
         );
 
         res.cookie("token", token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "none",
+            ...cookieOptions,
             maxAge: 60 * 60 * 1000
         });
 
@@ -68,10 +77,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        res.clearCookie("token", {
-            httpOnly: true,
-            sameSite: "lax"
-        });
+        res.clearCookie("token", cookieOptions);
         res.status(200).json({ message: "Logged out successfully", success: true });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });

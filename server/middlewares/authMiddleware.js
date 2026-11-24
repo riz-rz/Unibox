@@ -21,6 +21,10 @@ const authenticate = async (req, res, next) => {
             return res.status(401).json({ message: "User account no longer exists.", success: false });
         }
 
+        if (user.isBlocked) {
+            return res.status(403).json({ message: "Your account has been blocked.", success: false });
+        }
+
         req.user = user;
         next();
     } catch (error) {

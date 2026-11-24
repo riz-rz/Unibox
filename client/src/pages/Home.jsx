@@ -2,7 +2,7 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div className='flex flex-col px-10 w-sce'>
+    <div className='flex flex-col px-10 bg-[rgb(255,248,220)]'>
         <div className='h-screen  px-10  flex gap-5'>
             <div className='flex-1 flex flex-col pt-20 gap-6'>
                 <div className=''>

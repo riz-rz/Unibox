@@ -90,7 +90,7 @@ const Signup = () => {
                     </div>
                     <div>
                         <label htmlFor="" className='text-sm'>PASSWORD<span className='text-red-600'>*</span></label>
-                        <input onChange={handleChange} name='password' value={formData.password} type="text" placeholder='************' className='border-2 px-4 py-3 rounded-xl shadow-[3px_3px_0px_#000] outline-none'/>
+                        <input onChange={handleChange} name='password' value={formData.password} type="password" placeholder='************' className='border-2 px-4 py-3 rounded-xl shadow-[3px_3px_0px_#000] outline-none'/>
                     </div>
                 </div>
                 <label htmlFor="">AVATAR<span className='text-red-600'>*</span></label>

@@ -4,6 +4,6 @@ import authenticate, { authorize } from "../middlewares/authMiddleware.js"
 
 const router = express.Router()
 
-router.get("/admin/users",authenticate, authorize("admin","manager"), getAllUsers)
+router.get("/admin/users", authenticate, authorize("admin"), getAllUsers)
 
 export default router
