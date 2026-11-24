@@ -1,46 +1,45 @@
-import jwt, { decode } from 'jsonwebtoken'
-import User from '../models/users.js';
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
 
+const authenticate = async (req, res, next) => {
+    try {
+        const token = req.cookies?.token;
 
-const authenticate =async(req,res,next)=>{
-
-    const token = req.cookies.token
-
-    console.log(token);
-    
-
-    if(!token){
-        return res.status(500).json({success:false, message:"User not logged in"})
-    }
-
-    const decoded = jwt.verify(token,process.env.JWT_SECRET)
-
-    console.log("decoded: ",decoded);
-
-    const user = await User.findById(decoded.id)
-
-    req.user = user;
-
-    if(!decoded){
-        return res.status(401).json({success:false, message:"Invalid token"})
-    }
-
-    next()
-    
-}
-
-export const authorize =(...roles)=>{
-    return async(req, res, next)=>{
-        if(!req.user){
-            return res.status(401).json({ message: "login required", success: false })
+        if (!token) {
+            return res.status(401).json({ message: "Authentication required. Please log in.", success: false });
         }
 
-        if(!roles.includes(req.user.role)){
-            return res.status(401).json({ message: "unauthorized attempt", success: false })
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded || !decoded.id) {
+            return res.status(401).json({ message: "Invalid authentication token.", success: false });
         }
 
-        next()
-    }
-}
+        const user = await User.findById(decoded.id).select("-password");
 
-export default authenticate
+        if (!user) {
+            return res.status(401).json({ message: "User account no longer exists.", success: false });
+        }
+
+        req.user = user;
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: "Session expired or invalid token. Please log in again.", success: false });
+    }
+};
+
+export const authorize = (...roles) => {
+    return async (req, res, next) => {
+        if (!req.user) {
+            return res.status(401).json({ message: "Login required", success: false });
+        }
+
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ message: "Access forbidden: insufficient permissions", success: false });
+        }
+
+        next();
+    };
+};
+
+export default authenticate;
