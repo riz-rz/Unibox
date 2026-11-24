@@ -121,11 +121,6 @@ const Products = () => {
 
         {/* Products */}
         <section className='flex-1 min-w-0'>
-
-          <p className='text-stone-600 mb-6'>
-            Showing {filteredProds.length} products
-          </p>
-
           <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10'>
 
             {filteredProds.length > 0 ? (

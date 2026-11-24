@@ -15,7 +15,7 @@ const Header = () => {
         <nav>
             <ul className='flex gap-10 cursor-pointer'>
                 <li><Link to="/ ">Home</Link> </li>
-                <li><Link to="/products" >Products</Link> </li>
+                <li><Link to="/shop/products" >Products</Link> </li>
                 <li><Link>About Us</Link> </li>
                 <li><Link>Contacts</Link> </li>
             </ul>
@@ -23,7 +23,7 @@ const Header = () => {
         <div className='flex gap-5'>
            <Profile/>
             <button className='h-12 w-12 bg-[#FFD400] border-2 rounded-xl flex justify-center items-center shadow-[3px_3px_0px_#000] hover:-translate-y-0.5 cursor-pointer '>
-                <Link to="/cart"><BsCart3 size={25}/></Link>
+                <Link to="/shop/cart"><BsCart3 size={25}/></Link>
             </button>
         </div>
     </div>
