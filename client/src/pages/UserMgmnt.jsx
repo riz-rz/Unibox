@@ -22,6 +22,10 @@
 
   function UserMgmnt() {
     const [users, setUsers] = useState([]);
+    const [search, setSearch] = useState("");
+    const [roleFilter, setRoleFilter] = useState("All");
+    const [statusFilter, setStatusFilter] = useState("All");
+    const [selectedUser, setSelectedUser] = useState(null);
     
     const fetchUsers = async()=>{
       try {
@@ -37,7 +41,6 @@
       }
     }
 
-    }
 
     useEffect(()=>{
       fetchUsers()
