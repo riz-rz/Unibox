@@ -14,6 +14,8 @@ import AdminLayout from './layouts/AdminLayout'
 // import Dashboard from './pages/Dashboard'
 import UserMgmnt from './pages/UserMgmnt'
 import ProductsMgmnt from './pages/ProductsMgmnt'
+import ProtectedRoute from './components/ProtectedRoutes'
+import PublicOnlyRoute from './components/PublicOnlyRoutes'
 
 
 function App() {
