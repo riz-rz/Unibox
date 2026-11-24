@@ -4,59 +4,41 @@ import toast from 'react-hot-toast'
 
 const Cart = () => {
 
-  const [cart, setCart] = useState({
-    items: [],
-    totalPrice: 0
-  })
-
+  const [cart, setCart] = useState(null)
   const [loading, setLoading] = useState(true)
 
   // Fetch Cart
   const fetchCart = async () => {
     try {
-      const res = await fetch("http://localhost:5000/cart", {
-        credentials: "include"
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to fetch cart")
-      }
-
-      setCart(data.cart || {
-        items: [],
-        totalPrice: 0
-      })
-
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/cart`, { credentials: "include" });
+        const data = await res.json();
+        if (data.success) {
+            setCart(data.cart || { items: [], totalPrice: 0 });
+        }
     } catch (error) {
-      console.log("Error on front-end cart:", error.message)
-      toast.error(error.message || "Unable to fetch cart")
+        console.error("Cart fetch error:", error);
     } finally {
-      setLoading(false)
+        setLoading(false);
     }
   }
 
   // Remove Product From Cart
   const RemoveFromCart = async (prodId) => {
     try {
-      const res = await fetch(`http://localhost:5000/cart/${prodId}`, {
-        method: "DELETE",
-        credentials: "include"
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to remove product")
-      }
-
-      toast.success("Product removed from cart")
-      fetchCart()
-
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/cart/${prodId}`, {
+            method: "DELETE",
+            credentials: "include"
+        });
+        const data = await res.json();
+        if (data.success) {
+            toast.success("Item removed from cart");
+            fetchCart();
+        } else {
+            toast.error(data.message || "Failed to remove item");
+        }
     } catch (error) {
-      console.log(error)
-      toast.error(error.message || "Something went wrong")
+        console.error(error);
+        toast.error("Error removing item");
     }
   }
 
@@ -64,7 +46,7 @@ const Cart = () => {
   const handleQtyUpdation = async (prodId, action) => {
     try {
       const res = await fetch(
-        `http://localhost:5000/cart/${prodId}/${action}`,
+        `${import.meta.env.VITE_API_URL}/cart/${prodId}/${action}`,
         {
           method: "PUT",
           credentials: "include"

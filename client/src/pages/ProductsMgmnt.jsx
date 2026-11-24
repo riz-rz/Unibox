@@ -45,15 +45,17 @@ function ProductsMgmnt () {
 
 
   const fetchProducts =  async ()=>{
-    const res = await fetch("http://localhost:5000/products");
-    const data =await res.json()
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
+      const data = await res.json();
+      console.log(data);
+      if (data.success) {
+          setProducts(data.products)
+      }
 
-    console.log(data);
-    
-    if(data.success){
-        setProducts(data.prods)
+    } catch (error) {
+        console.log(error);
     }
-
   }
 
   useEffect(()=>{

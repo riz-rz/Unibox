@@ -6,11 +6,16 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
 
     const navigate = useNavigate()
+    const location = useLocation();
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,37 +28,25 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         try {
-            const res = await fetch("http://localhost:5000/login", {
-                method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData), credentials:"include"
-            });
+            const data = await login(formData.email, formData.password);
 
-            const data = await res.json();
-
-            console.log(data);
-
-            if(data.success){
-                navigate("/shop")
+            // Determine redirect target: prioritize the original route the user attempted to access
+            const originPath = location.state?.from?.pathname;
+            if (originPath) {
+                navigate(originPath, { replace: true });
+            } else if (data.user?.role === "admin") {
+                navigate("/admin", { replace: true });
+            } else {
+                navigate("/", { replace: true });
             }
-
-
-            if (!res.ok) {
-                alert(data.message || "Login failed");
-                return;
-            }
-
-            setFormData({
-                email:"",
-                password:""
-            })
-
-            toast.success("Login successfull!!")
-
-
-
         } catch (error) {
-            console.log("Error while logging in:", error);
+            // Handled and displayed via toast in AuthContext
+            console.error("Login attempt failed:", error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 

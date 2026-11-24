@@ -8,6 +8,7 @@ const Products = () => {
 
   const [products, setProducts] = useState([])
   const [search, setSearch] = useState("")
+  const [loadingProducts, setLoadingProducts] = useState(true)
 
   // Filter states
   const initialFilters = {
@@ -22,13 +23,15 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/products")
-      const data = await res.json()
-
-      setProducts(data.prods)
-
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/products`)
+        const data = await res.json()
+        if (data.success && data.products) {
+            setProducts(data.products)
+        }
     } catch (error) {
-      console.log("error while fetching prods", error)
+        console.error("Failed to fetch products:", error);
+    } finally {
+        setLoadingProducts(false)
     }
   }
 

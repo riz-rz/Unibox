@@ -10,17 +10,31 @@ const ProdCard = ({product}) => {
     const navigate = useNavigate()
 
     const handleCart =async(id, price)=>{
-        try {
-            const res = await fetch("http://localhost:5000/add-to-cart" , {
-            method:"POST", headers:{"Content-Type":"application/json"} ,body:JSON.stringify({id, price}) , credentials:"include"
-            })
-            const data = await res.json()
-            console.log(data);
 
-            toast.success("Item added to cart!!!")
+        // Enforce login requirement before adding to cart
+        if (!isAuthenticated) {
+            toast.error("Please login to add items to your cart");
+            navigate("/login", { state: { from: location } });
+            return;
+        }
+
+
+       try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/add-to-cart`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ id, price })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                toast.success(data.message || "Added to cart!");
+            } else {
+                toast.error(data.message || "Could not add item to cart");
+            }
         } catch (error) {
-            console.log("error while adding to cart:", error.message);
-            
+            console.error("Cart error:", error);
+            toast.error("Failed to add to cart");
         }
         
     }

@@ -1,10 +1,13 @@
 
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../context/useAuth';
 
 const Signup = () => {
 
+    const navigate = useNavigate();
+    const { register } = useAuth();
 
-    
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -12,6 +15,9 @@ const Signup = () => {
         phone: '',
         avatar:''
       });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     
 
     const handleChange=(e)=>{
@@ -21,30 +27,22 @@ const Signup = () => {
             ...formData,
             [name]: value
           });
-                //   console.log(formData);
+         //   console.log(formData);
 
     }
 
     const handleSubmit=async(e)=>{
         e.preventDefault()
+        setIsSubmitting(true);
 
-        try {
-            const res =await fetch("http://localhost:5000/register" ,{
-                method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(formData)
-            })
-            const data =await res.json()
 
-            console.log(data);
-
-            setFormData({
-                name: "",
-                email: "",
-                password: "",
-                phone: "",
-                avatar:""
-            })
+         try {
+            await register(formData);
+            navigate("/login");
         } catch (error) {
-            console.log("error while registering in client", error);
+            console.error("Registration error:", error);
+        } finally {
+            setIsSubmitting(false);
         }
         
     }
@@ -124,8 +122,18 @@ const Signup = () => {
                     </div> */}
                 {/* </div> */}
                 
-                <button className='border-2 w-full px-4 py-3 rounded-xl shadow-[3px_3px_0px_#000] bg-red-800 text-white '>
-                    SIGN UP
+                <button type="submit" disabled={isSubmitting} className='border-2 w-full px-4 py-3 rounded-xl shadow-[3px_3px_0px_#000] bg-red-800 text-white '>
+                        {isSubmitting ? (
+                            <>
+                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                <span>Creating Account...</span>
+                            </>
+                        ) : (
+                            <>
+                                <UserPlus size={16} />
+                                <span>Register</span>
+                            </>
+                        )}
                 </button>
             </form>
         </div>
