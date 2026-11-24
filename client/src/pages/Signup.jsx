@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../context/useAuth';
+import { UserPlus } from 'lucide-react';
 
 const Signup = () => {
 

@@ -1,6 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast"
+import useAuth from '../context/useAuth';
 
 
 const ProdCard = ({product}) => {
@@ -8,6 +9,8 @@ const ProdCard = ({product}) => {
     // console.log("data received at product card", product);
 
     const navigate = useNavigate()
+    const { isAuthenticated } = useAuth()
+    const location = useLocation()
 
     const handleCart =async(id, price)=>{
 

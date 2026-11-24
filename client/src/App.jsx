@@ -11,7 +11,7 @@ import HomeLayout from './layouts/HomeLayout'
 import {Toaster} from "react-hot-toast"
 import UserProfile from './pages/UserProfile'
 import AdminLayout from './layouts/AdminLayout'
-// import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard'
 import UserMgmnt from './pages/UserMgmnt'
 import ProductsMgmnt from './pages/ProductsMgmnt'
 import ProtectedRoute from './components/ProtectedRoutes'
@@ -56,7 +56,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<AdminDashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path="users" element={<UserMgmnt />} />
           <Route path="products" element={<ProductsMgmnt />} />
         </Route>
