@@ -6,42 +6,92 @@ import Signup from './pages/Signup'
 import Products from './pages/Products'
 import Cart from './pages/Cart'
 import Home from './pages/Home'
-import ProdDetails from './pages/ProdDetails'
+// import ProdDetails from './pages/ProdDetails'
 import HomeLayout from './layouts/HomeLayout'
 import {Toaster} from "react-hot-toast"
 import UserProfile from './pages/UserProfile'
 import AdminLayout from './layouts/AdminLayout'
-import Dashboard from './pages/Dashboard'
+// import Dashboard from './pages/Dashboard'
 import UserMgmnt from './pages/UserMgmnt'
 import ProductsMgmnt from './pages/ProductsMgmnt'
 
 
-const App = () => {
+function App() {
   return (
-    <div className='min-h-screen bg-[rgb(255,248,220)]'>
-      <Toaster/>
+    <>
+      <Toaster position="top-right" />
       <Routes>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup/>} />
+        {/* Customer Facing Routes Layout */}
+        <Route path="/" element={<HomeLayout />}>
+          <Route index element={<Home />} />
+          <Route path="products" element={<Products />} />
 
-        <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Protected Customer Routes - Login Required */}
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
 
-        <Route path='/shop' element={<HomeLayout/>}>
-          <Route index element={<Home/>}/> 
-          <Route path="user" element={<UserProfile/>} />
-          <Route path="products" element={<Products/>} />
-          <Route path="products/:id" element={<ProdDetails/>} />
-          <Route path="cart" element={<Cart/>} />
+        {/* Protected Admin Routes - Login & Role "admin" Required */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<UserMgmnt />} />
+          <Route path="products" element={<ProductsMgmnt />} />
         </Route>
-        <Route path='/admin' element={<AdminLayout/>}>
-          <Route path='dashboard' element={<Dashboard/>}/>
-          <Route path='users' element={<UserMgmnt/>}/>
-          <Route path='products' element={<ProductsMgmnt/>}/>
-        </Route>
-        
+
+        {/* Public-Only / Guest Routes - Redirect away if already logged in */}
+        <Route
+          path="/login"
+          element={
+            <PublicOnlyRoute>
+              <Login />
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicOnlyRoute>
+              <Signup />
+            </PublicOnlyRoute>
+          }
+        />
+
+        {/* 404 Route */}
+        <Route
+          path="*"
+          element={
+            <div className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
+              <h1 className="text-6xl font-bold text-gray-800">404</h1>
+              <p className="mt-3 text-lg text-gray-600">The page you are looking for does not exist.</p>
+              <a href="/" className="mt-6 rounded-lg bg-black px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-800">
+                Go to Homepage
+              </a>
+            </div>
+          }
+        />
       </Routes>
-
-    </div>
+    </>
   )
 }
 

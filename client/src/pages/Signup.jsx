@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 
 const Signup = () => {
 
+
+    
     const [formData, setFormData] = useState({
         name: '',
         email: '',
