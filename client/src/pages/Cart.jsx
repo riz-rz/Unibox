@@ -87,10 +87,10 @@ const Cart = () => {
       {/* Header */}
       <div className='flex justify-between items-end border-b-2 border-black pb-5 mb-10'>
         <div>
-          <h1 className='text-4xl font-bold'>Your Box.</h1>
+          <h1 className='text-xl md:text-4xl font-bold'>Your Box.</h1>
         </div>
 
-        <p className='text-gray-500 font-medium'>
+        <p className='text-gray-500 text-lg md:font-medium'>
           You have {cart?.items?.length || 0} Items in your cart
         </p>
       </div>
