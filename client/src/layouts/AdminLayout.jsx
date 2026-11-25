@@ -16,7 +16,7 @@ import {
 const menuItems = [
   {
     name: "Dashboard",
-    path: "/admin/dashboard",
+    path: "/admin",
     icon: LayoutDashboard,
     end: true,
   },

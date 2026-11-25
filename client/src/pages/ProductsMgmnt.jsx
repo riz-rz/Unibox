@@ -58,7 +58,7 @@ const ProductsMgmnt = () => {
             const data = await res.json();
             console.log(data);
             if (data.success) {
-                setProducts(data.products)
+                setProducts(data.prods)
             }
 
         } catch (error) {
